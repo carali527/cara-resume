@@ -4,6 +4,11 @@
     <h1>CARA</h1>
     <h2>Work Portfolio</h2>
     <p>Frontend Engineer</p>
+    <a href="#about" @click.prevent="scrollToSection('about')">
+			<div class="scrollDown">
+				<div class="scrollDot"></div>
+			</div>
+    </a>
   </section>
   <section id="about" ref="about">
     <div class="section__content">
@@ -147,6 +152,12 @@ const observerCallback = (entries) => {
   });
 };
 
+const scrollToSection = (sectionId) => {
+  if (sectionId === 'about' && about.value) {
+    about.value.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
 let observer;
 
 onMounted(() => {
@@ -191,6 +202,13 @@ section {
     line-height: 1.6;
     text-align: justify;
     max-width: 800px;
+  }
+
+  &:first-of-type {
+
+    a {
+      position: relative;
+    }
   }
 }
 
@@ -398,6 +416,42 @@ section img {
 section.active img {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+}
+
+.scrollDown {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 36px;
+  border: 1px solid black;
+  border-radius: 25px;
+  cursor: pointer;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background-color: black;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    animation: scrollAnimation 2s infinite;
+  }
+}
+
+@keyframes scrollAnimation {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
 }
 
 @media (max-width: 768px) {
